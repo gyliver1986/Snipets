@@ -16,18 +16,22 @@ def add_snippet_page(request):
 
 def snippets_page(request):
     snippets = Snippet.objects.all()
-    context = {'pagename': 'Просмотр сниппетов', 'snippets': snippets}
-               
-               
-        
+    context = {
+            'pagename': 'Просмотр сниппетов',
+            'snippets': snippets
+            }                              
     return render(request, 'pages/view_snippets.html', context)
 
 
-# def snippet_page(request):
+def snippet_detail(request, snippet_id):
+    context = {'pagename': 'Сниппет'}
+    try:
+        snippet = Snippet.objects.get(id=snippet_id)
+    except Snippet.DoesNotExist:
+        return render(request, 'pages/errors.html', context | {'error': f"Snippet with id= {snippet_id} not found"})
+     
+    else:
+        context['snippet']= snippet
 
-#     snippet = Snippet.objects.all()
-
-#     context = {'snippet': snippet
-
-#             }
-#     return render(request, 'pages/view_snippets.html', context)
+            
+        return render(request, 'pages/snippet_detail.html', context)
