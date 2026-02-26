@@ -46,3 +46,4 @@ def snippet_detail(request, snippet_id):
 def create_snippet(request):
     print(f"{request.POST = }")
     return HttpResponse('ok')
+
