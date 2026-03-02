@@ -10,8 +10,9 @@ class SnippetForm(ModelForm):
 
 
    def clean_name(self):
+       """Метод для проверки длины поля"""
        snippet_name = self.cleaned_data.get('name')
-       if snippet_name is None and len(snippet_name) >3:
+       if snippet_name is  not None and len(snippet_name) >3:
            return snippet_name
        raise ValidationError('Snippets name too short.')
        

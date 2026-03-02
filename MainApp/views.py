@@ -44,6 +44,11 @@ def snippet_detail(request, snippet_id):
     
 
 def create_snippet(request):
-    print(f"{request.POST = }")
-    return HttpResponse('ok')
+    if request.method == 'POST':
+        form = SnippetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("snippets-list") # переход на страницу списка snippets-list
+        return render(request, 'pages/add_snippet.html', context= {'form': form})    
+    return HttpResponse('OK')        
 
