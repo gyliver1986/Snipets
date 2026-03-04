@@ -35,7 +35,12 @@
                     {% for snippet in snippets %}        
                         <tr>
                             <td scope="row">{{snippet.id}}</td>
-                            <td><a href=" {% url 'snippet-detail' snippet.id %}">{{snippet.name}}</a></td>
+                            <td>
+                                <a href=" {% url 'snippet-detail' snippet.id %}">{{snippet.name}}</a>
+                                <a href="{% url "snippet-delete" snippet.id %}">
+                                    <i style="color: blue;" class="bi bi-trash"></i>
+                                </a>
+                            </td>
                             <td>{{snippet.lang}}</td>
                             <td>{{snippet.creation_date | date:"d F Y H:i:s"}}</td>
                         </tr>
