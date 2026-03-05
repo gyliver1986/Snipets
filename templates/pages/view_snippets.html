@@ -43,13 +43,20 @@
                             </td>
                             <td>{{snippet.lang}}</td>
                             <td>{{snippet.creation_date | date:"d F Y H:i:s"}}</td>
+                            <td>
+                                <form action="{% url "snippet-delete" snippet.id %}" method= "POST">
+                                       {% csrf_token %}
+                                       <button type="submit" class="btn btn-danger">DELETE</button>
+                                </form>
+                                    
+                            </td>
                         </tr>
                     {% endfor %}
                     
                     </tbody>
                 </table>
                 <div align="right">
-                    <i style="color: gray;">Всего сниппетов: 2</i>
+                    <i style="color: gray;">Всего сниппетов: {{snippets.count}}</i>
                 </div>
             </div>
         </div>
