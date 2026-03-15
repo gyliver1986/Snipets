@@ -28,8 +28,8 @@ def add_snippet_page(request):
         form = SnippetForm(request.POST)
         if form.is_valid():
              snippet = form.save(commit=False) # получаем экземпляр класса Snippet
-             if request.user.is_authenticated():
-                 snippet.user = username
+             if request.user.is_authenticated:
+                 snippet.user = request.user
                  snippet.save()
              return redirect("snippets-list") # переход на страницу списка snippets-list
         return render(request, 'pages/add_snippet.html', context= {'form': form})    
@@ -68,22 +68,43 @@ def snippet_delete(request, snippet_id):
     
 
 
-def snippet_edit(request, snippet_id): 
-    pass   
+def snippet_edit(request, snippet_id):
+    context = {"pagename": "Обновление сниппета"}
+    snippet = get_object_or_404(Snippet, id=snippet_id)
+
+    # Создаем форму на основе данных snippet'a при запросе GET
+    if request.method == "GET":
+        form = SnippetForm(instance=snippet)
+        return render(request, 'pages/add_snippet.html', context  | {"form": form})
+    
+    # Получаем данные из формы и на их основе создаем новый сниппет сохраняя его в бд
+
+    if request.method == 'POST':
+        form = SnippetForm(request.POST)
+        if form.is_valid():
+             snippet = form.save(commit=False) # получаем экземпляр класса Snippet
+             if request.user.is_authenticated:
+                 snippet.user = request.user
+                 snippet.save()
+             return redirect("snippets-list") # переход на страницу списка snippets-list
+        return render(request, 'pages/add_snippet.html', context= {'form': form})    
+
+       
 
 
 def login(request):
    if request.method == 'POST':
        username = request.POST.get("username")
        password = request.POST.get("password")
-       # print("username =", username)
-       # print("password =", password)
        user = auth.authenticate(request, username=username, password=password)
        if user is not None:
            auth.login(request, user)
        else:
-           # Return error message
-           pass
+           context = {
+               "pagename": "PythonBin",
+               "errors": ["Wrong username or password"], 
+           }
+           return render(request, "pages/index.html", context)
    return redirect('home')
 
    
