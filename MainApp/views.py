@@ -80,15 +80,12 @@ def snippet_edit(request, snippet_id):
     # Получаем данные из формы и на их основе создаем новый сниппет сохраняя его в бд
 
     if request.method == 'POST':
-        form = SnippetForm(request.POST)
-        if form.is_valid():
-             snippet = form.save(commit=False) # получаем экземпляр класса Snippet
-             if request.user.is_authenticated:
-                 snippet.user = request.user
-                 snippet.save()
-             return redirect("snippets-list") # переход на страницу списка snippets-list
-        return render(request, 'pages/add_snippet.html', context= {'form': form})    
-
+        data_form = request.POST
+        snippet.name = data_form['name']
+        snippet.code = data_form['code']
+        snippet.save()
+        return redirect("snippets-list") # переход на страницу списка snippets-list
+        
        
 
 

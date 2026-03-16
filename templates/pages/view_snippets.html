@@ -41,14 +41,21 @@
                                 <a href="{% url "snippet-delete" snippet.id %}">
                                     <i style="color: blue;" class="bi bi-trash"></i>
                                 </a>
+                                <a href="{% url "snippet-edit" snippet.id %}">
+                                    <i style="color: blue;" class="bi bi-pen"></i>
+                                </a>
                             </td>
                             <td>{{snippet.lang}}</td>
                             <td>{{snippet.creation_date | date:"d F Y H:i:s"}}</td>
                             <td>
+                                <div style="display: flex; flex-direction: row;">
+                                <a href="{% url 'snippet-edit' snippet.id %}" class="btn btn-primary">Edit</a>
+                                &nbsp;&nbsp;    
                                 <form action="{% url "snippet-delete" snippet.id %}" method= "POST">
                                        {% csrf_token %}
                                        <button type="submit" class="btn btn-danger">DELETE</button>
                                 </form>
+                                </div>
                                     
                             </td>
                             <td>{{ snippet.user.username }}</td>
