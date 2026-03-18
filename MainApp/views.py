@@ -3,12 +3,26 @@ from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.forms import SnippetForm
 from MainApp.models import Snippet
 from django.contrib import auth
-
+from django.contrib.auth.decorators import  login_required
 
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
+
+
+@login_required
+def my_snippets(request):
+    snippets = Snippet.objects.filter(user=request.user)
+    context = {
+        "pagename": "Мои сниппеты",
+        "snippets": snippets
+    }
+    return render(request, "pages/view_snippets.html", context)
+
+
+
+
 
 
 def add_snippet_page(request):
@@ -56,7 +70,8 @@ def snippet_detail(request, snippet_id):
 
             
         return render(request, 'pages/snippet_detail.html', context)
-    
+
+
 
 def snippet_delete(request, snippet_id):
     if request.method == 'GET' or request.method == 'POST':
@@ -66,9 +81,8 @@ def snippet_delete(request, snippet_id):
     return redirect('snippets-list')
     
     
-
-
-def snippet_edit(request, snippet_id):
+@login_required
+def snippet_edit(request, snippet_id: int):
     context = {"pagename": "Обновление сниппета"}
     snippet = get_object_or_404(Snippet, id=snippet_id)
 
