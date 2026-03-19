@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, Textarea,  ValidationError
+from django.forms import CheckboxInput, ModelForm, TextInput, Textarea,  ValidationError
 from MainApp.models import Snippet
 
 
@@ -7,8 +7,8 @@ class SnippetForm(ModelForm):
     class Meta:
             model = Snippet
             # Описываем поля, которые будем заполнять в форме
-            fields = ['name', 'lang', 'code']
-            labels = {"name": "", "lang": "", "code": ""}
+            fields = ['name', 'lang', 'code', 'pablic']
+            labels = {"name": "", "lang": "", "code": "", "public": "Public(checked) / Private(unchecked)"}
             widgets = {
                 "name": TextInput(attrs={
                     "class": "form-control",
@@ -20,7 +20,8 @@ class SnippetForm(ModelForm):
                     "rows": 5,
                     "class": "input-large",
                     'style': 'width: 50% !important; resize: vertical !important;'
-                }),  
+                }),
+                "public": CheckboxInput(attrs={"value": "True"})
             }
 
     def clean_name(self):
