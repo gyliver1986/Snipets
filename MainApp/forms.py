@@ -7,7 +7,7 @@ class SnippetForm(ModelForm):
     class Meta:
             model = Snippet
             # Описываем поля, которые будем заполнять в форме
-            fields = ['name', 'lang', 'code', 'pablic']
+            fields = ['name', 'lang', 'code', 'public']
             labels = {"name": "", "lang": "", "code": "", "public": "Public(checked) / Private(unchecked)"}
             widgets = {
                 "name": TextInput(attrs={
