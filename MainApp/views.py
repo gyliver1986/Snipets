@@ -72,7 +72,7 @@ def snippet_detail(request, snippet_id):
         return render(request, 'pages/snippet_detail.html', context)
 
 
-
+@login_required
 def snippet_delete(request, snippet_id):
     if request.method == 'GET' or request.method == 'POST':
         snippet = get_object_or_404(Snippet.objects.filter(user=request.user), id=snippet_id)
@@ -124,3 +124,8 @@ def login(request):
 def logout (request):
     auth.logout(request)
     return redirect (to='home')
+
+
+
+def create_user(request):
+    pass
