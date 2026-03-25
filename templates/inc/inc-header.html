@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{% url "home" %}">
-                <img src="{% static 'images/logo.png' %}" width="32" height="32" alt="">
+                <img src="{% static 'images/logo.png' %}" width="42" height="42" alt="">
                 PythonBin
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -60,6 +60,7 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
+                <a style="padding: auto;" href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
             {% endif %}    
         </div>
     </nav>
