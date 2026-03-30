@@ -64,7 +64,7 @@ def snippet_detail(request, snippet_id):
      
     else:
         context['snippet']= snippet
-        context['comments_form'] = CommentForm()
+        context['comment_form'] = CommentForm()
 
             
         return render(request, 'pages/snippet_detail.html', context)
@@ -133,7 +133,7 @@ def create_user(request):
             form.save()
             return redirect("home") 
     context['form'] = form    
-    return render(request, 'pages/registradftion.html', context)
+    return render(request, 'pages/registration.html', context)
 
 
 def comment_add(request):
